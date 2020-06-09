@@ -1,27 +1,34 @@
-MODULES=device		\
-				adapter		\
-				application
+MODULES=device	\
+				adapter
+TEST_MODULES=application \
+				     test
 OBJECTS=$(foreach MODULE, ${MODULES}, build/${MODULE}.o)
+TEST_OBJECTS=$(foreach MODULE, ${TEST_MODULES}, build/${MODULE}.o)
+TEST_EXEC=test
 PACKAGES = giomm-2.4 sigc++-2.0
 CFLAGS   = -std=c++17 -O2 -Wall `pkg-config --cflags ${PACKAGES}` -g
 LDFLAGS  = `pkg-config --libs ${PACKAGES}`
 LIB			 = bluez
+LIB_FILE = lib${LIB}.so
 
-all: build ${LIB}
+all: ${LIB_FILE}
 
-test: build ${LIB}
-	g++ ${CFLAGS} ${LDFLAGS} test.cc -L. -l${LIB} -o test
+test: ${LIB_FILE} ${TEST_OBJECTS}
+	g++ ${CFLAGS} ${LDFLAGS} ${TEST_OBJECTS} -L. -l${LIB} -o ${TEST_EXEC}
 
-${LIB}: ${OBJECTS}
-	g++ -shared $^ -o lib$@.so ${LDFLAGS}
+${LIB_FILE}: ${OBJECTS}
+	g++ -shared $^ -o ${LIB_FILE} ${LDFLAGS}
 
-build/%.o : src/%.cc
-	g++ -c $< -fpic -o $@ ${CFLAGS}
+format:
+	astyle -rnCS *.{h,cc}
 
-build:
+build/%.o : format builddir src/%.cc
+	g++ -c $(word 3, $^) -fpic -o $@ ${CFLAGS}
+
+builddir:
 	mkdir -p build
 
 clean:
 	rm -rf build
-	rm -rf lib${LIB}.so
-	rm -rf test
+	rm -rf ${LIB_FILE}
+	rm -rf ${TEST_EXEC}

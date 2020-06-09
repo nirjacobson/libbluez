@@ -3,16 +3,16 @@
 Bluez::Adapter::Adapter(const std::string& iface)
     : _iface(iface) {
     _objectManagerProxy = Gio::DBus::Proxy::create_for_bus_sync	(
-        Gio::DBus::BusType::BUS_TYPE_SYSTEM,
-        Bluez::BusName,
-        "/",
-        Freedesktop::ObjectManager::Interface);
+                              Gio::DBus::BusType::BUS_TYPE_SYSTEM,
+                              Bluez::BusName,
+                              "/",
+                              Freedesktop::ObjectManager::Interface);
 
     _adapterProxy = Gio::DBus::Proxy::create_for_bus_sync	(
-        Gio::DBus::BusType::BUS_TYPE_SYSTEM,
-        Bluez::BusName,
-        Bluez::PathPrefix + "/" + iface,
-        Adapter::Interface);
+                        Gio::DBus::BusType::BUS_TYPE_SYSTEM,
+                        Bluez::BusName,
+                        Bluez::PathPrefix + "/" + iface,
+                        Adapter::Interface);
 
     init_devices();
     _objectManagerProxy->signal_signal().connect(sigc::mem_fun(this, &Adapter::on_signal));
@@ -33,7 +33,9 @@ std::vector<std::string> Bluez::Adapter::devices() const {
         _addressToDeviceMap.cbegin(),
         _addressToDeviceMap.cend(),
         std::back_inserter(devices),
-        [](const std::map<std::string, DeviceEntry>::value_type pair){ return pair.first; });
+    [](const std::map<std::string, DeviceEntry>::value_type pair) {
+        return pair.first;
+    });
 
     return devices;
 }
@@ -139,7 +141,7 @@ void Bluez::Adapter::on_interfaces_added(const Glib::VariantContainerBase& param
 
         _addressToDeviceMap.insert(std::pair<std::string, DeviceEntry>(device_address, {device_path, device_alias}));
         _pathToAddressMap.insert(std::pair<std::string, std::string>(device_path, device_address));
-        
+
         _signal_device_added.emit(device_address);
 
         break;
