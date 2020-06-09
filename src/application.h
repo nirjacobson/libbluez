@@ -1,5 +1,5 @@
-#ifndef BLUEPP_APPLICATION_H
-#define BLUEPP_APPLICATION_H
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
 #include <vector>
 
@@ -26,4 +26,4 @@ class Application {
         void on_device_removed(const std::string& address);
 };
 
-#endif // BLUEPP_APPLICATION_H
+#endif // APPLICATION_H

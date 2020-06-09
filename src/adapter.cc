@@ -30,8 +30,8 @@ std::vector<std::string> Bluez::Adapter::devices() const {
     std::vector<std::string> devices;
 
     std::transform(
-        _addressToDeviceMap.cbegin(),
-        _addressToDeviceMap.cend(),
+        _addressToDeviceMap.begin(),
+        _addressToDeviceMap.end(),
         std::back_inserter(devices),
     [](const std::map<std::string, DeviceEntry>::value_type pair) {
         return pair.first;
@@ -65,7 +65,7 @@ Bluez::Adapter::sig_device Bluez::Adapter::signal_device_removed() {
 }
 
 void Bluez::Adapter::init_devices() {
-    Glib::VariantContainerBase result = _objectManagerProxy->call_sync(Freedesktop::ObjectManager::Methods::GetManagedObjects);
+    const Glib::VariantContainerBase result = _objectManagerProxy->call_sync(Freedesktop::ObjectManager::Methods::GetManagedObjects);
     Glib::VariantContainerBase objects;
     result.get_child(objects);
 
