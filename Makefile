@@ -17,8 +17,7 @@ all: build/ ${LIB_FILE}
 install: ${LIB_FILE}
 	sudo cp $< /usr/lib
 	sudo mkdir -p ${INCLUDE_DIR}
-	cd src
-	sudo rsync -a -m --include '*/' --include '*.h' --exclude '*' . ${INCLUDE_DIR}
+	sudo cp src/*.h ${INCLUDE_DIR}
 
 test: ${LIB_FILE} ${TEST_OBJECTS}
 	g++ ${CFLAGS} ${LDFLAGS} ${TEST_OBJECTS} -L. -l${LIB} -o ${TEST_EXEC}
