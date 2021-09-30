@@ -42,4 +42,4 @@ clean:
 
 distclean:
 	sudo rm -f /usr/lib/${LIB_FILE}
-	rm -rf ${INCLUDE_DIR}
+	sudo rm -rf ${INCLUDE_DIR}
