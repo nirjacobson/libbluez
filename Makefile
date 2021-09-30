@@ -13,6 +13,9 @@ LIB_FILE =     lib${LIB}.so
 
 all: build/ ${LIB_FILE}
 
+install: ${LIB_FILE}
+	sudo cp $< /usr/lib
+
 test: ${LIB_FILE} ${TEST_OBJECTS}
 	g++ ${CFLAGS} ${LDFLAGS} ${TEST_OBJECTS} -L. -l${LIB} -o ${TEST_EXEC}
 
@@ -30,5 +33,8 @@ build/:
 
 clean:
 	rm -rf build
-	rm -rf ${LIB_FILE}
-	rm -rf ${TEST_EXEC}
+	rm -f ${LIB_FILE}
+	rm -f ${TEST_EXEC}
+
+distclean:
+	sudo rm -f /usr/lib/${LIB_FILE}
