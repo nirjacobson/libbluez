@@ -15,9 +15,9 @@ INCLUDE_DIR  = /usr/include/${LIB}
 all: build/ ${LIB_FILE}
 
 install: ${LIB_FILE}
-	sudo cp $< /usr/lib
-	sudo mkdir -p ${INCLUDE_DIR}
-	sudo cp src/*.h ${INCLUDE_DIR}
+	cp $< /usr/lib
+	mkdir -p ${INCLUDE_DIR}
+	cp src/*.h ${INCLUDE_DIR}
 
 test: ${LIB_FILE} ${TEST_OBJECTS}
 	g++ ${CFLAGS} ${LDFLAGS} ${TEST_OBJECTS} -L. -l${LIB} -o ${TEST_EXEC}
@@ -40,5 +40,5 @@ clean:
 	rm -f ${TEST_EXEC}
 
 distclean:
-	sudo rm -f /usr/lib/${LIB_FILE}
-	sudo rm -rf ${INCLUDE_DIR}
+	rm -f /usr/lib/${LIB_FILE}
+	rm -rf ${INCLUDE_DIR}
