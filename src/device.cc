@@ -6,13 +6,13 @@ Bluez::Device::Device(const std::string& path)
     , _paired(false) {
 
     _deviceProxy = Gio::DBus::Proxy::create_for_bus_sync (
-                       Gio::DBus::BusType::BUS_TYPE_SYSTEM,
+                       Gio::DBus::BusType::SYSTEM,
                        Bluez::BusName,
                        path,
                        Device::Interface
                    );
 
-    _deviceProxy->signal_properties_changed().connect(sigc::mem_fun(this, &Device::on_device_properties_changed));
+    _deviceProxy->signal_properties_changed().connect(sigc::mem_fun(*this, &Device::on_device_properties_changed));
 
     Glib::Variant<std::string> stringVariant;
     _deviceProxy->get_cached_property(stringVariant, Properties::Address);

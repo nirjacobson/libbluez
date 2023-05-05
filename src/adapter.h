@@ -12,7 +12,7 @@
 #include <glibmm/refptr.h>
 #include <giomm/dbusproxy.h>
 #include <glibmm/variant.h>
-#include <sigc++-2.0/sigc++/sigc++.h>
+#include <sigc++/sigc++.h>
 
 #include "bluez.h"
 #include "freedesktop.h"
@@ -23,7 +23,7 @@ namespace Bluez {
     class Adapter {
 
         public:
-            typedef sigc::signal<void, std::string> sig_device;
+            typedef sigc::signal<void(std::string)> sig_device;
 
             struct DeviceNotFound : public std::exception {
                 const char* what() const throw() {

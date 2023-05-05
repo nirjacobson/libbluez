@@ -7,7 +7,7 @@
 #include <glibmm/refptr.h>
 #include <glibmm/variant.h>
 #include <giomm/dbusproxy.h>
-#include <sigc++-2.0/sigc++/sigc++.h>
+#include <sigc++/sigc++.h>
 
 #include "freedesktop.h"
 #include "bluez.h"
@@ -20,7 +20,7 @@ namespace Bluez {
 
         public:
 
-            typedef sigc::signal<void> sig_connection;
+            typedef sigc::signal<void()> sig_connection;
 
             const std::string& address() const;
             const std::string& alias() const;

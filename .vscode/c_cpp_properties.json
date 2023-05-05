@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Gentoo",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/include/glibmm-2.68/**",
+                "/usr/include/giomm-2.68/**",
+                "/usr/include/gtkmm-4.0/**",
+                "/usr/include/**",
+                "/usr/lib64/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm64"
+        }
+    ],
+    "version": 4
+}

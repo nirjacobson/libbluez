@@ -5,7 +5,7 @@
 
 #include <glibmm/refptr.h>
 #include <glibmm/main.h>
-#include <sigc++-2.0/sigc++/sigc++.h>
+#include <sigc++/sigc++.h>
 
 #include "adapter.h"
 #include "device.h"

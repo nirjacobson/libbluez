@@ -1,29 +1,37 @@
 #include "adapter.h"
 
 Bluez::Adapter::Adapter(const std::string& iface)
-    : _iface(iface) {
-    _objectManagerProxy = Gio::DBus::Proxy::create_for_bus_sync	(
-                              Gio::DBus::BusType::BUS_TYPE_SYSTEM,
-                              Bluez::BusName,
-                              "/",
-                              Freedesktop::ObjectManager::Interface);
+    : _iface(iface)
+    , _objectManagerProxy(nullptr)
+    , _adapterProxy(nullptr) {
+    Gio::DBus::Proxy::create_for_bus(
+        Gio::DBus::BusType::SYSTEM,
+        Bluez::BusName,
+        "/",
+        Freedesktop::ObjectManager::Interface,
+    [&](Glib::RefPtr<Gio::AsyncResult>& result) {
+        _objectManagerProxy = Gio::DBus::Proxy::create_for_bus_finish(result);
 
-    _adapterProxy = Gio::DBus::Proxy::create_for_bus_sync	(
-                        Gio::DBus::BusType::BUS_TYPE_SYSTEM,
-                        Bluez::BusName,
-                        Bluez::PathPrefix + "/" + iface,
-                        Adapter::Interface);
-
-    init_devices();
-    _objectManagerProxy->signal_signal().connect(sigc::mem_fun(this, &Adapter::on_signal));
+        init_devices();
+        _objectManagerProxy->signal_signal().connect(sigc::mem_fun(*this, &Adapter::on_signal));
+    });
+    Gio::DBus::Proxy::create_for_bus(
+        Gio::DBus::BusType::SYSTEM,
+        Bluez::BusName,
+        Bluez::PathPrefix + "/" + iface,
+        Adapter::Interface,
+    [&](Glib::RefPtr<Gio::AsyncResult>& result) {
+        _adapterProxy = Gio::DBus::Proxy::create_for_bus_finish(result);
+        std::cout << std::hex << _adapterProxy.get() << std::endl;
+    });
 }
 
 void Bluez::Adapter::startDiscovery() const {
-    _adapterProxy->call_sync(Methods::StartDiscovery);
+    if (_adapterProxy) _adapterProxy->call_sync(Methods::StartDiscovery);
 }
 
 void Bluez::Adapter::stopDiscovery() const {
-    _adapterProxy->call_sync(Methods::StopDiscovery);
+    if (_adapterProxy) _adapterProxy->call_sync(Methods::StopDiscovery);
 }
 
 std::vector<std::string> Bluez::Adapter::devices() const {
@@ -107,9 +115,9 @@ void Bluez::Adapter::on_signal (const Glib::ustring& sender_name, const Glib::us
     Glib::Variant<std::string> path;
     parameters.get_child(path, 0);
 
-    if (signal_name == Freedesktop::ObjectManager::Signals::InterfacesAdded) {
+    if (signal_name == Freedesktop::ObjectManager::Signals::InterfacesAdded.data()) {
         on_interfaces_added(parameters);
-    } else if (signal_name == Freedesktop::ObjectManager::Signals::InterfacesRemoved) {
+    } else if (signal_name == Freedesktop::ObjectManager::Signals::InterfacesRemoved.data()) {
         on_interfaces_removed(parameters);
     }
 }
