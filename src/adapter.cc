@@ -22,7 +22,6 @@ Bluez::Adapter::Adapter(const std::string& iface)
         Adapter::Interface,
     [&](Glib::RefPtr<Gio::AsyncResult>& result) {
         _adapterProxy = Gio::DBus::Proxy::create_for_bus_finish(result);
-        std::cout << std::hex << _adapterProxy.get() << std::endl;
     });
 }
 
