@@ -15,7 +15,7 @@ INCLUDE_DIR  = /usr/include/${LIB}
 all: build/ ${LIB_FILE}
 
 install: ${LIB_FILE}
-	cp $< /usr/lib
+	cp $< /usr/lib64
 	mkdir -p ${INCLUDE_DIR}
 	cp src/*.h ${INCLUDE_DIR}
 

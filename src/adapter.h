@@ -33,8 +33,8 @@ namespace Bluez {
 
             Adapter(const std::string& iface);
 
-            void startDiscovery() const;
-            void stopDiscovery() const;
+            void start_discovery() const;
+            void stop_discovery() const;
 
             std::vector<std::string> devices() const;
             const std::string& alias(const std::string& address) const;
@@ -54,11 +54,11 @@ namespace Bluez {
             };
 
             std::string _iface;
-            Glib::RefPtr<Gio::DBus::Proxy> _objectManagerProxy;
-            Glib::RefPtr<Gio::DBus::Proxy> _adapterProxy;
+            Glib::RefPtr<Gio::DBus::Proxy> _object_manager_proxy;
+            Glib::RefPtr<Gio::DBus::Proxy> _adapter_proxy;
 
-            std::map<std::string, DeviceEntry> _addressToDeviceMap;
-            std::map<std::string, std::string> _pathToAddressMap;
+            std::map<std::string, DeviceEntry> _address_to_device_map;
+            std::map<std::string, std::string> _path_to_address_map;
 
             sig_device _signal_device_added;
             sig_device _signal_device_removed;

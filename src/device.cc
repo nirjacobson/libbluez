@@ -5,26 +5,26 @@ Bluez::Device::Device(const std::string& path)
     , _connected(false)
     , _paired(false) {
 
-    _deviceProxy = Gio::DBus::Proxy::create_for_bus_sync (
+    _device_proxy = Gio::DBus::Proxy::create_for_bus_sync (
                        Gio::DBus::BusType::SYSTEM,
                        Bluez::BusName,
                        path,
                        Device::Interface
                    );
 
-    _deviceProxy->signal_properties_changed().connect(sigc::mem_fun(*this, &Device::on_device_properties_changed));
+    _device_proxy->signal_properties_changed().connect(sigc::mem_fun(*this, &Device::on_device_properties_changed));
 
-    Glib::Variant<std::string> stringVariant;
-    _deviceProxy->get_cached_property(stringVariant, Properties::Address);
-    _address = stringVariant.get();
-    _deviceProxy->get_cached_property(stringVariant, Properties::Alias);
-    _alias = stringVariant.get();
+    Glib::Variant<std::string> string_variant;
+    _device_proxy->get_cached_property(string_variant, Properties::Address);
+    _address = string_variant.get();
+    _device_proxy->get_cached_property(string_variant, Properties::Alias);
+    _alias = string_variant.get();
 
-    Glib::Variant<bool> boolVariant;
-    _deviceProxy->get_cached_property(boolVariant, Properties::Connected);
-    _connected = boolVariant.get();
-    _deviceProxy->get_cached_property(boolVariant, Properties::Paired);
-    _paired = boolVariant.get();
+    Glib::Variant<bool> bool_variant;
+    _device_proxy->get_cached_property(bool_variant, Properties::Connected);
+    _connected = bool_variant.get();
+    _device_proxy->get_cached_property(bool_variant, Properties::Paired);
+    _paired = bool_variant.get();
 }
 
 const std::string& Bluez::Device::address() const {
@@ -44,15 +44,15 @@ bool Bluez::Device::paired() const {
 }
 
 void Bluez::Device::pair() const {
-    _deviceProxy->call(Methods::Pair);
+    _device_proxy->call(Methods::Pair);
 }
 
 void Bluez::Device::connect() const {
-    _deviceProxy->call(Methods::Connect);
+    _device_proxy->call(Methods::Connect);
 }
 
 void Bluez::Device::disconnect() const {
-    _deviceProxy->call(Methods::Disconnect);
+    _device_proxy->call(Methods::Disconnect);
 }
 
 Bluez::Device::sig_connection Bluez::Device::signal_connected() {

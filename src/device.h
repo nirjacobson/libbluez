@@ -41,7 +41,7 @@ namespace Bluez {
             class Properties;
             class Methods;
 
-            Glib::RefPtr<Gio::DBus::Proxy> _deviceProxy;
+            Glib::RefPtr<Gio::DBus::Proxy> _device_proxy;
 
             std::string _path;
             bool _connected;

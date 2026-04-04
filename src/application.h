@@ -18,7 +18,7 @@ class Application {
         void run();
 
     private:
-        Glib::RefPtr<Glib::MainLoop> _mainLoop;
+        Glib::RefPtr<Glib::MainLoop> _main_loop;
 
         Bluez::Adapter _adapter;
 
