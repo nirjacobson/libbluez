@@ -6,11 +6,11 @@ Bluez::Device::Device(const std::string& path)
     , _paired(false) {
 
     _device_proxy = Gio::DBus::Proxy::create_for_bus_sync (
-                       Gio::DBus::BusType::SYSTEM,
-                       Bluez::BusName,
-                       path,
-                       Device::Interface
-                   );
+                        Gio::DBus::BusType::SYSTEM,
+                        Bluez::BusName,
+                        path,
+                        Device::Interface
+                    );
 
     _device_proxy->signal_properties_changed().connect(sigc::mem_fun(*this, &Device::on_device_properties_changed));
 
@@ -74,7 +74,8 @@ void Bluez::Device::on_device_properties_changed (const Gio::DBus::Proxy::MapCha
 
         if (_connected) {
             _signal_connected.emit();
-        } else {
+        }
+        else {
             _signal_disconnected.emit();
         }
     }
@@ -85,7 +86,8 @@ void Bluez::Device::on_device_properties_changed (const Gio::DBus::Proxy::MapCha
 
         if (_paired) {
             _signal_paired.emit();
-        } else {
+        }
+        else {
             _signal_disconnected.emit();
         }
     }
