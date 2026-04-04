@@ -1,14 +1,12 @@
-MODULES      = device      \
-               adapter
-TEST_MODULES = application \
-               test
+MODULES      = adapter device
+TEST_MODULES = application test
 OBJECTS      = $(foreach MODULE, ${MODULES}, build/${MODULE}.o)
 TEST_OBJECTS = $(foreach MODULE, ${TEST_MODULES}, build/${MODULE}.o)
 TEST_EXEC    = test
 PACKAGES     = giomm-2.68 sigc++-3.0
 CFLAGS       = -std=c++17 -O2 -Wall `pkg-config --cflags ${PACKAGES}` -g
 LDFLAGS      = `pkg-config --libs ${PACKAGES}`
-LIB			     = bluez
+LIB			 = bluez
 LIB_FILE     = lib${LIB}.so
 INCLUDE_DIR  = /usr/include/${LIB}
 
