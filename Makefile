@@ -8,13 +8,14 @@ CFLAGS       = -std=c++17 -O2 -Wall `pkg-config --cflags ${PACKAGES}` -g
 LDFLAGS      = `pkg-config --libs ${PACKAGES}`
 LIB			 = bluez
 LIB_FILE     = lib${LIB}.so
+LIB_DIR      = /usr/lib64
 INCLUDE_DIR  = /usr/include/${LIB}
 
 all: build/ ${LIB_FILE}
 
 install: ${LIB_FILE}
-	install -D $< ${DESTDIR}/usr/lib64
-	install -D src/*.h ${INCLUDE_DIR}
+	install -D $< ${DESTDIR}${LIB_DIR}
+	install -D src/*.h ${DESTDIR}${INCLUDE_DIR}
 
 test: build/ ${LIB_FILE} ${TEST_OBJECTS}
 	g++ ${CFLAGS} ${LDFLAGS} ${TEST_OBJECTS} -L. -l${LIB} -o ${TEST_EXEC}
