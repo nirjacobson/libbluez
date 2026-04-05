@@ -15,7 +15,7 @@ all: build/ ${LIB_FILE}
 
 install: ${LIB_FILE}
 	install -D $< ${DESTDIR}${LIB_DIR}
-	install -D src/*.h ${DESTDIR}${INCLUDE_DIR}
+	install -D src/*.h -t ${DESTDIR}${INCLUDE_DIR}
 
 test: build/ ${LIB_FILE} ${TEST_OBJECTS}
 	g++ ${CFLAGS} ${LDFLAGS} ${TEST_OBJECTS} -L. -l${LIB} -o ${TEST_EXEC}
