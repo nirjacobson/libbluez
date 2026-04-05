@@ -8,7 +8,7 @@ CFLAGS       = -std=c++17 -O2 -Wall `pkg-config --cflags ${PACKAGES}` -g
 LDFLAGS      = `pkg-config --libs ${PACKAGES}`
 LIB			 = bluez
 LIB_FILE     = lib${LIB}.so
-LIB_DIR      = /usr/lib64/
+LIB_DIR      = /usr/lib64
 INCLUDE_DIR  = /usr/include/${LIB}/
 
 all: build/ ${LIB_FILE}
