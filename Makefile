@@ -9,7 +9,7 @@ LDFLAGS      = `pkg-config --libs ${PACKAGES}`
 LIB			 = bluez
 LIB_FILE     = lib${LIB}.so
 LIB_DIR      = /usr/lib64
-INCLUDE_DIR  = /usr/include/${LIB}/
+INCLUDE_DIR  = /usr/include/${LIB}
 
 all: build/ ${LIB_FILE}
 
