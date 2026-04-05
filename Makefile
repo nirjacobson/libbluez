@@ -14,7 +14,7 @@ INCLUDE_DIR  = /usr/include/${LIB}
 all: build/ ${LIB_FILE}
 
 install: ${LIB_FILE}
-	install -D $< ${DESTDIR}${LIB_DIR}
+	install $< ${DESTDIR}${LIB_DIR}
 	install -D src/*.h -t ${DESTDIR}${INCLUDE_DIR}
 
 test: build/ ${LIB_FILE} ${TEST_OBJECTS}
