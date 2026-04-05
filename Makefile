@@ -10,14 +10,14 @@ LIB			 = bluez
 LIB_FILE     = lib${LIB}.so
 INCLUDE_DIR  = /usr/include/${LIB}
 
-all: ${LIB_FILE}
+all: build/ ${LIB_FILE}
 
 install: ${LIB_FILE}
 	cp $< /usr/lib64
 	mkdir -p ${INCLUDE_DIR}
 	cp src/*.h ${INCLUDE_DIR}
 
-test: ${LIB_FILE} ${TEST_OBJECTS}
+test: build/ ${LIB_FILE} ${TEST_OBJECTS}
 	g++ ${CFLAGS} ${LDFLAGS} ${TEST_OBJECTS} -L. -l${LIB} -o ${TEST_EXEC}
 
 ${LIB_FILE}: ${OBJECTS}
@@ -26,7 +26,7 @@ ${LIB_FILE}: ${OBJECTS}
 format:
 	astyle -rnNCS *.{h,cc}
 
-build/%.o : src/%.cc build/
+build/%.o : src/%.cc
 	g++ -c $< -fpic -o $@ ${CFLAGS}
 
 build/:
