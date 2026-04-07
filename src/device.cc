@@ -1,4 +1,10 @@
-#include "device.h"
+/**
+ * @file device.cc
+ * @author Nir Jacobson
+ * @date 2026-04-07
+ */
+
+ #include "device.h"
 
 Bluez::Device::Device(const std::string& path)
     : _path(path)

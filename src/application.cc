@@ -1,4 +1,10 @@
-#include "application.h"
+/**
+ * @file application.cc
+ * @author Nir Jacobson
+ * @date 2026-04-07
+ */
+
+ #include "application.h"
 
 Application::Application()
     : _main_loop(Glib::MainLoop::create())

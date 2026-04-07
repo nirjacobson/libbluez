@@ -110,7 +110,7 @@ void Bluez::Adapter::init_devices() {
     }
 }
 
-void Bluez::Adapter::on_signal (const Glib::ustring& sender_name, const Glib::ustring& signal_name, const Glib::VariantContainerBase& parameters) {
+void Bluez::Adapter::on_signal (const Glib::ustring&, const Glib::ustring& signal_name, const Glib::VariantContainerBase& parameters) {
     Glib::Variant<std::string> path;
     parameters.get_child(path, 0);
 
