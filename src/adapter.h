@@ -30,6 +30,7 @@ namespace Bluez {
     class Adapter {
 
         public:
+            /// @brief "Device added/removed" signal type.
             typedef sigc::signal<void(std::string)> sig_device;
 
             /// @brief Thrown when an unknown device is requested
@@ -58,7 +59,7 @@ namespace Bluez {
             /// @return the device alias
             const std::string& alias(const std::string& address) const;
 
-            /// @brief Return a Bluetooth device proxy for a given device
+            /// @brief Returns a Bluetooth device proxy for a given device
             /// @param [in] address the MAC address of the device
             /// @return a Bluetooth device proxy
             Device* device(const std::string& address);
@@ -67,7 +68,7 @@ namespace Bluez {
             sig_device signal_device_removed(); ///< Getter for ::_signal_device_removed.
 
         private:
-            /// @brief The D-Bus Bluetooth adapter interface
+            /// @brief Bluez adapter D-Bus interface name.
             inline static const std::string Interface = "org.bluez.Adapter1";
 
             class Methods;
@@ -85,8 +86,8 @@ namespace Bluez {
             std::map<std::string, DeviceEntry> _address_to_device_map; ///< Device information by MAC address
             std::map<std::string, std::string> _path_to_address_map;   ///< Mapping of device D-Bus path to MAC address
 
-            sig_device _signal_device_added;   ///> Emitted when a new device appears
-            sig_device _signal_device_removed; ///> Emitted when a device disappears
+            sig_device _signal_device_added;   ///< Emitted when a new device appears
+            sig_device _signal_device_removed; ///< Emitted when a device disappears
 
             /// @brief Initialize an internal list of preregistered Bluetooth device information
             void init_devices();
@@ -117,8 +118,8 @@ namespace Bluez {
     /// @brief D-Bus method names supported by the D-Bus Adapter interface
     class Adapter::Methods {
         public:
-            inline static const std::string StartDiscovery = "StartDiscovery";
-            inline static const std::string StopDiscovery = "StopDiscovery";
+            inline static const std::string StartDiscovery = "StartDiscovery";  ///< StartDiscovery method name.
+            inline static const std::string StopDiscovery = "StopDiscovery";    ///< StopDiscovery method name.
     };
 
 }

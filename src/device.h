@@ -27,19 +27,20 @@ namespace Bluez {
 
         public:
 
+            /// @brief "Device paired/connected/disconnected" signal type.
             typedef sigc::signal<void()> sig_connection;
 
-            const std::string& address() const;
-            const std::string& alias() const;
-            bool connected() const;
-            bool paired() const;
+            const std::string& address() const; ///< Getter for ::_address.
+            const std::string& alias() const;   ///< Getter for ::_alias.
+            bool connected() const;             ///< Getter for ::_connected.
+            bool paired() const;                ///< Getter for ::_paired.
 
             /// @brief Connect to this Bluetooth device.
-            /// You must pair() before you connect().
+            /// You must /;;pair() before you /;;connect().
             void connect() const;
 
             /// @brief Pair with this Bluetooth device.
-            /// You can connect after you pair.
+            /// You can ::connect() after you ::pair().
             /// @see connect().
             void pair() const;
 
@@ -51,51 +52,52 @@ namespace Bluez {
             sig_connection signal_disconnected(); ///< Getter for ::_signal_disconnected.
 
         private:
+            /// @brief Bluez device D-Bus interface name.
             inline static const std::string Interface = "org.bluez.Device1";
 
             class Properties;
             class Methods;
 
-            /// @brief D-Bus proxy for the device object
+            /// @brief D-Bus proxy for the device object.
             Glib::RefPtr<Gio::DBus::Proxy> _device_proxy;
 
-            std::string _path; ///< The path to the device D-Bus object
-            bool _connected;   ///< Whether the device is currently connected
-            bool _paired;      ///< Whether the device is currently paired
+            std::string _path; ///< The path to the device D-Bus object.
+            bool _connected;   ///< Whether the device is currently connected.
+            bool _paired;      ///< Whether the device is currently paired.
 
-            sig_connection _signal_connected;    ///< Emitted upon successful connection
-            sig_connection _signal_paired;       ///< Emitted upon successful pairing
-            sig_connection _signal_disconnected; ///< Emitted upon disconnection
+            sig_connection _signal_connected;    ///< Emitted upon successful connection.
+            sig_connection _signal_paired;       ///< Emitted upon successful pairing.
+            sig_connection _signal_disconnected; ///< Emitted upon disconnection.
 
-            /// @brief Adapter constructor
-            /// @param [in] path The path to the device D-Bus object
+            /// @brief Adapter constructor.
+            /// @param [in] path The path to the device D-Bus object.
             Device(const std::string& path);
 
-            std::string _address; ///< The device MAC address
-            std::string _alias;   ///< The device alias (readable name)
+            std::string _address; ///< The device MAC address.
+            std::string _alias;   ///< The device alias (readable name).
 
-            /// @brief Called when properties change on the Device object (pairing and connection status, etc.)
-            /// @param [in] changed_properties     properties that have changed
-            /// @param [in] invalidated_properties properties that are no longer valid
+            /// @brief Called when properties change on the Device object (pairing and connection status, etc.).
+            /// @param [in] changed_properties     Properties that have changed.
+            /// @param [in] invalidated_properties Properties that are no longer valid.
             void on_device_properties_changed (const Gio::DBus::Proxy::MapChangedProperties& changed_properties, const std::vector<Glib::ustring>& invalidated_properties);
 
     };
 
-    /// @brief D-Bus property names supported by the D-Bus Device interface
+    /// @brief D-Bus property names supported by the D-Bus Device interface.
     class Device::Properties {
         public:
-            inline static const std::string Address = "Address";
-            inline static const std::string Alias = "Alias";
-            inline static const std::string Connected = "Connected";
-            inline static const std::string Paired = "Paired";
+            inline static const std::string Address = "Address";        ///< Address property name.
+            inline static const std::string Alias = "Alias";            ///< Alias property name.
+            inline static const std::string Connected = "Connected";    ///< Connected property name.
+            inline static const std::string Paired = "Paired";          ///< Paired property name.
     };
 
-    /// @brief D-Bus method names supported by the D-Bus Device interface
+    /// @brief D-Bus method names supported by the D-Bus Device interface.
     class Device::Methods {
         public:
-            inline static const std::string Connect = "Connect";
-            inline static const std::string Pair = "Pair";
-            inline static const std::string Disconnect = "Disconnect";
+            inline static const std::string Connect = "Connect";        ///< Connect method name.
+            inline static const std::string Pair = "Pair";              ///< Pair method name.
+            inline static const std::string Disconnect = "Disconnect";  ///< Disconnect method name.
     };
 
 }

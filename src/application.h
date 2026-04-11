@@ -21,12 +21,14 @@
 class Application {
 
     public:
+        /// @brief Application constructor.
         Application();
 
+        /// @brief Runs the Application.
         void run();
 
     private:
-        Glib::RefPtr<Glib::MainLoop> _main_loop;
+        Glib::RefPtr<Glib::MainLoop> _main_loop;    ///< Application main loop.
 
         Bluez::Adapter _adapter; ///< The bluetooth Adapter
 
