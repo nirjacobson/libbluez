@@ -49,7 +49,7 @@ namespace Bluez {
             /// @brief Causes the Adapter to stop discovering new devices.
             void stop_discovery() const;
 
-            /// @brief Returns the MAC addresses of registed Bluetooth devices
+            /// @brief Returns the MAC addresses of registered Bluetooth devices
             /// @return a list of MAC addresses
             std::vector<std::string> devices() const;
 
@@ -63,8 +63,8 @@ namespace Bluez {
             /// @return a Bluetooth device proxy
             Device* device(const std::string& address);
 
-            sig_device signal_device_added();
-            sig_device signal_device_removed();
+            sig_device signal_device_added();   ///< Getter for ::_signal_device_added.
+            sig_device signal_device_removed(); ///< Getter for ::_signal_device_removed.
 
         private:
             /// @brief The D-Bus Bluetooth adapter interface
@@ -79,8 +79,8 @@ namespace Bluez {
             };
 
             std::string _iface; ///< The name of the adapter, i.e. hci0
-            Glib::RefPtr<Gio::DBus::Proxy> _object_manager_proxy; ///< D-Bus proxy for the adapter object using manager interface
-            Glib::RefPtr<Gio::DBus::Proxy> _adapter_proxy;        ///< D-Bus proxy for the adapter object using adapter interface
+            Glib::RefPtr<Gio::DBus::Proxy> _object_manager_proxy; ///< D-Bus proxy for the adapter object using the manager interface
+            Glib::RefPtr<Gio::DBus::Proxy> _adapter_proxy;        ///< D-Bus proxy for the adapter object using the adapter interface
 
             std::map<std::string, DeviceEntry> _address_to_device_map; ///< Device information by MAC address
             std::map<std::string, std::string> _path_to_address_map;   ///< Mapping of device D-Bus path to MAC address
@@ -88,7 +88,7 @@ namespace Bluez {
             sig_device _signal_device_added;   ///> Emitted when a new device appears
             sig_device _signal_device_removed; ///> Emitted when a device disappears
 
-            /// @brief Initialize an internal list of preregistered Bluetooth devices
+            /// @brief Initialize an internal list of preregistered Bluetooth device information
             void init_devices();
 
             /// @brief Called when the object manager interface emits a signal

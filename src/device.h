@@ -46,9 +46,9 @@ namespace Bluez {
             /// @brief Disconnect from this Bluetooth device.
             void disconnect() const;
 
-            sig_connection signal_connected();
-            sig_connection signal_paired();
-            sig_connection signal_disconnected();
+            sig_connection signal_connected();    ///< Getter for ::_signal_connected.
+            sig_connection signal_paired();       ///< Getter for ::_signal_paired.
+            sig_connection signal_disconnected(); ///< Getter for ::_signal_disconnected.
 
         private:
             inline static const std::string Interface = "org.bluez.Device1";

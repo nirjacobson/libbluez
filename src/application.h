@@ -30,7 +30,7 @@ class Application {
 
         Bluez::Adapter _adapter; ///< The bluetooth Adapter
 
-        /// @brief Called when a new device is registered.
+        /// @brief Called when a new device is registered
         void on_device_added(const std::string& address);
 
         /// @brief Called when a device is removed.
